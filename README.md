@@ -1,4 +1,6 @@
-# gradle-local-properties-jdk
+# gradlew-jdk-local
+
+[English](README.en.md) | 简体中文
 
 统一 Gradle Wrapper 基座 JVM 的本地配置来源。
 

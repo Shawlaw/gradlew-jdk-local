@@ -3,7 +3,7 @@
 ## 方式一：AI Prompt（推荐）
 
 1. 打开 `prompts/zh.md`（或 `prompts/en.md`）。
-2. 复制全文，连同你项目的 `gradlew` 和 `gradlew.bat` 一起扔给 AI（ChatGPT、Claude、Gemini、Haiku 均可）。
+2. 复制全文，连同你项目的 `gradlew` 和 `gradlew.bat` 一起扔给 AI。
 3. AI 返回 patch 后的脚本，覆盖原文件。
 4. 参考 `examples/local.properties`，在 `local.properties` 里加上 `java.home`。
 

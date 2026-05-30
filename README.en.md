@@ -38,7 +38,7 @@ When multiple JDK paths are configured, this patch looks them up in the followin
 3. **`JAVA_HOME` environment variable** (Gradle Wrapper native logic)
 4. **`java` in system `PATH`** (final fallback)
 
-This respects the Android developer's habit of统一管理 local paths, while remaining compatible with existing Android Studio projects that use `.gradle/config.properties`. If neither is configured, it fully falls back to the Gradle Wrapper's native `JAVA_HOME` → `PATH` logic, **without breaking any existing behavior**.
+This respects the Android developer's habit of keeping all local paths in one place, while remaining compatible with existing Android Studio projects that use `.gradle/config.properties`. If neither is configured, it fully falls back to the Gradle Wrapper's native `JAVA_HOME` → `PATH` logic, **without breaking any existing behavior**.
 
 ## Repository Structure
 

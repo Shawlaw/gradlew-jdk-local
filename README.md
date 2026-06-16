@@ -1,10 +1,47 @@
 # gradlew-jdk-local
 
-[English](README.en.md) | 简体中文
+简体中文 | [English](README.en.md)
 
 统一 Gradle Wrapper 基座 JVM 的本地配置来源。
 
 > 本 Patch 让 `gradlew` / `gradlew.bat` 在启动 Gradle Daemon 前，优先从项目本地配置文件读取 JDK 路径，解决 IDE 与命令行 JDK 不一致的问题。
+
+---
+
+## 快速开始
+
+### 方式一：AI Prompt（推荐）
+
+#### 如果你的 AI 支持读取网页
+
+直接把下面这句话和你的 `gradlew` / `gradlew.bat` 所在的目录路径一起发给 AI：
+
+> 请按照 https://raw.githubusercontent.com/Shawlaw/gradlew-jdk-local/main/prompts/zh.md 中的要求，修改 `<你的项目目录>` 下的 gradlew 和 gradlew.bat。
+
+#### 如果你的 AI 不支持读取网页
+
+1. 打开 `prompts/zh.md`，复制全文。
+2. 连同你项目的 `gradlew` 和 `gradlew.bat` 一起扔给 AI。
+3. AI 返回 patch 后的脚本，覆盖原文件。
+
+#### 后续步骤（两种方式都一样）
+
+4. 参考 `examples/local.properties`，在 `local.properties` 里加上 `java.home`。
+5. 运行 `./gradlew --version`（或 `gradlew.bat --version`），确认 `JVM` 一行指向你配置的 JDK。
+
+### 方式二：手动 Patch
+
+1. 打开 `snippets/gradlew-insert.sh` 和 `snippets/gradlew.bat-insert.bat`。
+2. 按文件内的注释说明，将代码粘贴到 `gradlew` / `gradlew.bat` 的对应位置。
+3. 在 `local.properties` 中加入 `java.home`（参考 `examples/local.properties`）。
+4. 运行 `./gradlew --version` 验证。
+
+### 局限性
+
+- Wrapper 层面的 patch，非 Gradle / AGP 官方标准做法。
+- `./gradlew wrapper` 升级后需重新 patch。
+
+---
 
 ## 功能说明
 
@@ -42,6 +79,8 @@ Android 项目的本地工具链配置是碎片化的：
 
 这样既尊重了 Android 开发者统一配置本地路径的习惯，又兼容了已有 Android Studio 项目的 `.gradle/config.properties` 设置。如果两者都未配置，则完全回退到 Gradle Wrapper 原生的 `JAVA_HOME` → `PATH` 逻辑，**不会破坏任何现有行为**。
 
+---
+
 ## 仓库结构
 
 ```
@@ -49,6 +88,8 @@ Android 项目的本地工具链配置是碎片化的：
 ├── snippets/       # 纯代码插入段，支持手动 Patch
 └── examples/       # local.properties 配置示例
 ```
+
+---
 
 ## License
 

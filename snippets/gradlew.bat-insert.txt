@@ -1,7 +1,10 @@
 @rem ============================================================================
 @rem 插入位置说明
 @rem ============================================================================
-@rem 在 gradlew.bat（Windows Batch 版 Gradle Wrapper）中，找到以下注释行：
+@rem 注意：本文件是代码插入片段，不是可执行脚本，请勿直接运行。
+@rem 请按下方说明，将代码块粘贴到 gradlew.bat（Windows Batch 版 Gradle Wrapper）中。
+@rem
+@rem 在 gradlew.bat 中找到以下注释行：
 @rem
 @rem     @rem Find java.exe
 @rem

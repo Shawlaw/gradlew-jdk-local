@@ -31,7 +31,7 @@ Send the following line to the AI, along with the directory path where your `gra
 
 ### Option 2: Manual Patch
 
-1. Open `snippets/gradlew-insert.sh` and `snippets/gradlew.bat-insert.bat`.
+1. Open `snippets/gradlew-insert.txt` and `snippets/gradlew.bat-insert.txt` (these are text snippets, not executable scripts; copy and paste according to the comments).
 2. Follow the comments in each file to paste the code into the corresponding locations in `gradlew` / `gradlew.bat`.
 3. Add `java.home` to `local.properties` (see `examples/local.properties`).
 4. Run `./gradlew --version` to verify.

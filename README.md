@@ -31,7 +31,7 @@
 
 ### 方式二：手动 Patch
 
-1. 打开 `snippets/gradlew-insert.sh` 和 `snippets/gradlew.bat-insert.bat`。
+1. 打开 `snippets/gradlew-insert.txt` 和 `snippets/gradlew.bat-insert.txt`（这两个是文本片段，不是可执行脚本，按注释说明复制粘贴即可）。
 2. 按文件内的注释说明，将代码粘贴到 `gradlew` / `gradlew.bat` 的对应位置。
 3. 在 `local.properties` 中加入 `java.home`（参考 `examples/local.properties`）。
 4. 运行 `./gradlew --version` 验证。

@@ -124,9 +124,18 @@ No. This patch overrides `JAVA_HOME` during the wrapper startup phase, which tak
 ## Repository Structure
 
 ```
-├── prompts/        # AI Prompts; copy and paste into an LLM to auto-patch
-├── snippets/       # Pure code snippets for manual patching
-└── examples/       # Example local.properties configuration
+.
+├── LICENSE                    # Apache License 2.0
+├── README.md                  # Simplified Chinese documentation
+├── README.en.md               # English documentation
+├── examples/
+│   └── local.properties       # Example local.properties configuration
+├── prompts/
+│   ├── zh.md                  # Chinese prompt for AI
+│   └── en.md                  # English prompt for AI
+└── snippets/
+    ├── gradlew-insert.txt     # Unix shell snippet for manual patching
+    └── gradlew.bat-insert.txt # Windows Batch snippet for manual patching
 ```
 
 ---

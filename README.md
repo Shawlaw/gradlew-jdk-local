@@ -124,9 +124,18 @@ java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 ## 仓库结构
 
 ```
-├── prompts/        # AI Prompt，复制给 LLM 即可自动 Patch
-├── snippets/       # 纯代码插入段，支持手动 Patch
-└── examples/       # local.properties 配置示例
+.
+├── LICENSE                    # Apache License 2.0
+├── README.md                  # 简体中文文档
+├── README.en.md               # English documentation
+├── examples/
+│   └── local.properties       # local.properties 配置示例
+├── prompts/
+│   ├── zh.md                  # 给 AI 看的中文 Prompt
+│   └── en.md                  # 给 AI 看的英文 Prompt
+└── snippets/
+    ├── gradlew-insert.txt     # 手动 Patch 用的 Unix shell 代码片段
+    └── gradlew.bat-insert.txt # 手动 Patch 用的 Windows Batch 代码片段
 ```
 
 ---

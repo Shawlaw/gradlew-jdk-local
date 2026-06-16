@@ -50,10 +50,12 @@ Android 项目的本地工具链配置是碎片化的：
 | 配置项 | 存储位置 | IDE 认 | 命令行认 | 进 Git |
 |---|---|---|---|---|
 | SDK 路径 | `local.properties` | ✅ | ✅ | ❌ |
-| NDK 路径 | `local.properties` | ✅ | ✅ | ❌ |
+| NDK 路径（`ndk.dir` 已弃用） | `local.properties` | ✅ | ✅ | ❌ |
 | JDK 路径（AS 私用） | `.gradle/config.properties` | ✅ | ❌ | ❌ |
 | JDK 路径（Gradle） | `gradle.properties` / `org.gradle.java.home` | ✅ | ✅ | ✅（文件进 Git，但 `java.home` 属性因是绝对路径，常被本地覆盖） |
 | JDK 路径（系统） | `JAVA_HOME` | ✅ | ✅ | N/A |
+
+> 注：Android 官方已不再推荐在 `local.properties` 中使用 `ndk.dir` 配置 NDK 路径，新项目是使用 `ndkVersion` 或 `android.ndkPath` 等方式指定。这里仍列出只是为了说明 `local.properties` 作为本地路径配置入口的历史习惯。
 
 ### 更具体的痛点
 

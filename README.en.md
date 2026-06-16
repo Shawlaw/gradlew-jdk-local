@@ -50,10 +50,12 @@ The local toolchain configuration in Android projects is fragmented:
 | Config Item | Storage Location | IDE Recognizes | CLI Recognizes | In Git |
 |---|---|---|---|---|
 | SDK path | `local.properties` | ✅ | ✅ | ❌ |
-| NDK path | `local.properties` | ✅ | ✅ | ❌ |
+| NDK path (`ndk.dir` deprecated) | `local.properties` | ✅ | ✅ | ❌ |
 | JDK path (AS private) | `.gradle/config.properties` | ✅ | ❌ | ❌ |
 | JDK path (Gradle) | `gradle.properties` / `org.gradle.java.home` | ✅ | ✅ | ✅ (file in Git, but `java.home` is often locally overridden because it's an absolute path) |
 | JDK path (system) | `JAVA_HOME` | ✅ | ✅ | N/A |
+
+> Note: Android no longer recommends using `ndk.dir` in `local.properties` to configure the NDK path. Newer projects typically use `ndkVersion` or `android.ndkPath` instead. It is listed here only to illustrate the historical convention of keeping local paths in `local.properties`.
 
 ### The Real Pain Point
 

@@ -73,8 +73,10 @@ set "_LOCAL_JAVA_HOME="
 if exist "%APP_HOME%\local.properties" (
     for /f "usebackq tokens=1* delims==" %%a in ("%APP_HOME%\local.properties") do (
         if "%%a"=="java.home" (
-            set "_LOCAL_JAVA_HOME=%%b"
-            goto :applyLocalJavaHome
+            if not "%%b"=="" (
+                set "_LOCAL_JAVA_HOME=%%b"
+                goto :applyLocalJavaHome
+            )
         )
     )
 )
@@ -84,8 +86,10 @@ if not defined _LOCAL_JAVA_HOME (
     if exist "%APP_HOME%\.gradle\config.properties" (
         for /f "usebackq tokens=1* delims==" %%a in ("%APP_HOME%\.gradle\config.properties") do (
             if "%%a"=="java.home" (
-                set "_LOCAL_JAVA_HOME=%%b"
-                goto :applyLocalJavaHome
+                if not "%%b"=="" (
+                    set "_LOCAL_JAVA_HOME=%%b"
+                    goto :applyLocalJavaHome
+                )
             )
         )
     )

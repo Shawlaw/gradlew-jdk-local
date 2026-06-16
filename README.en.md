@@ -103,7 +103,9 @@ java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 
 ### What if the configured `java.home` does not exist?
 
-It will not fail immediately. If `local.properties` is missing or the configured path is invalid, the script falls back in this order:
+As long as `java.home` is read, this patch uses it to override `JAVA_HOME`. If that path does not exist, the Gradle Wrapper's native logic checks it and reports the error.
+
+If `local.properties` is missing or has no `java.home`, the script continues looking in this order:
 
 1. `java.home` in `.gradle/config.properties`
 2. The `JAVA_HOME` environment variable

@@ -32,7 +32,7 @@ After patching, please self-check and include the following verification notes i
 5. **Fallback behavior note**: Briefly explain that:
    - If `local.properties` is missing or has no `java.home`, the script falls back to `.gradle/config.properties`.
    - If neither is configured, it fully falls back to the native `JAVA_HOME` / `PATH` logic.
-   - If the configured JDK path does not exist, the Gradle Wrapper continues with its original lookup logic and does not fail immediately.
+   - If `java.home` is read, it directly overrides `JAVA_HOME`; path validity is checked by the Gradle Wrapper's native logic.
 
 ### Reference Implementation
 

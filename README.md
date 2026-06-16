@@ -103,7 +103,9 @@ java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 
 ### 配置的 `java.home` 不存在会怎样？
 
-不会直接报错。如果 `local.properties` 没有配置或配置无效，会按优先级回退：
+只要读取到 `java.home`，本 patch 就会用它覆盖 `JAVA_HOME`。如果这个路径不存在，后续会由 Gradle Wrapper 原生逻辑检查并报错。
+
+如果 `local.properties` 不存在或没有配置 `java.home`，才会按优先级继续查找：
 
 1. `.gradle/config.properties` 中的 `java.home`
 2. 环境变量 `JAVA_HOME`

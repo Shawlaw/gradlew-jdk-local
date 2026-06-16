@@ -16,6 +16,24 @@ Modify `gradlew` (Unix) and `gradlew.bat` (Windows) to read `java.home` from `lo
 4. Insert after `APP_HOME` is resolved but before `JAVA_HOME` is used.
 5. Handle Windows path escaping (`\:` and `\\`) in `local.properties`.
 
+### Verification
+
+After patching, please self-check and include the following verification notes in your response:
+
+1. **Placement check**: Confirm that the inserted code block is placed after `APP_HOME` is resolved but before `JAVA_HOME` is used.
+2. **Syntax check**: Confirm that the `gradlew` code is POSIX shell compatible and the `gradlew.bat` code is Windows Batch compatible.
+3. **Effect verification**:
+   - If you can execute commands in the project directory, run `./gradlew --version` (on Windows run `gradlew.bat --version`) before and after the patch, and show the comparison of the two `JVM:` lines in your response to prove the patch is effective.
+   - If you cannot execute commands, provide the following manual verification steps at the end of your response:
+     - **Before patch**: Run `./gradlew --version` (on Windows run `gradlew.bat --version`) and note the JDK path shown in the `JVM:` line (usually the system `JAVA_HOME`).
+     - **After patch**: Add `java.home` to `local.properties` (see the configuration example above) and run `./gradlew --version` again.
+     - **Compare**: Confirm that the `JVM:` line now shows the JDK path configured in `local.properties`.
+4. **Priority note**: Briefly explain the patched JDK lookup priority at the end of your response: `java.home` in `local.properties` > `java.home` in `.gradle/config.properties` > environment variable `JAVA_HOME` > `java` in system `PATH`.
+5. **Fallback behavior note**: Briefly explain that:
+   - If `local.properties` is missing or has no `java.home`, the script falls back to `.gradle/config.properties`.
+   - If neither is configured, it fully falls back to the native `JAVA_HOME` / `PATH` logic.
+   - If the configured JDK path does not exist, the Gradle Wrapper continues with its original lookup logic and does not fail immediately.
+
 ### Reference Implementation
 
 **In `gradlew`**, insert before the line `# Determine the Java command to use to start the JVM.`:
@@ -95,4 +113,4 @@ java.home=C\:\\Program Files\\Android\\Android Studio\\jbr
 
 Note: `local.properties` is a Java Properties file. Windows backslashes must be doubled.
 
-Please apply the above changes to the `gradlew` and `gradlew.bat` content I will paste below.
+Please apply the above changes to the `gradlew` and `gradlew.bat` in the target project, and include the verification notes in your response. If you have been given the project directory path, read the files directly from that directory; if the user has pasted the file contents below, modify the pasted content directly.

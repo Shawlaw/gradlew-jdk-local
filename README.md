@@ -81,6 +81,46 @@ Android 项目的本地工具链配置是碎片化的：
 
 ---
 
+## 常见问题
+
+### 路径带空格怎么办？
+
+支持。**空格不需要转义，也不要把整个路径用双引号包起来**。`local.properties` 是 Java Properties 文件，等号 `=` 后面的整行就是属性值，只有反斜杠需要双写。
+
+Windows 下按 `examples/local.properties` 的示例写法：
+
+```properties
+java.home=C\:\\Program Files\\Android\\Android Studio\\jbr
+```
+
+macOS / Linux 使用普通 Unix 路径即可，例如：
+
+```properties
+java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+```
+
+### 配置的 `java.home` 不存在会怎样？
+
+不会直接报错。如果 `local.properties` 没有配置或配置无效，会按优先级回退：
+
+1. `.gradle/config.properties` 中的 `java.home`
+2. 环境变量 `JAVA_HOME`
+3. 系统 `PATH` 中的 `java`
+
+### `local.properties` 被 .gitignore 排除了，别人 clone 后怎么办？
+
+正常，本 patch 的设计就是本地配置不进入 Git。新成员 clone 后自己在 `local.properties` 里配 `java.home` 即可。
+
+### 升级 Gradle Wrapper 后 patch 失效了？
+
+`./gradlew wrapper` 会重新生成 `gradlew` / `gradlew.bat`，需要重新 patch。这是 wrapper-level patch 的固有限制。
+
+### 和 `gradle.properties` 里的 `org.gradle.java.home` 冲突吗？
+
+不冲突。本 patch 在 wrapper 启动阶段就覆盖了 `JAVA_HOME`，优先级高于 Gradle 内部读取的 `org.gradle.java.home`。
+
+---
+
 ## 仓库结构
 
 ```

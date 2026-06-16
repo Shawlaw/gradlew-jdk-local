@@ -81,6 +81,46 @@ This respects the Android developer's habit of keeping all local paths in one pl
 
 ---
 
+## FAQ
+
+### What about paths with spaces?
+
+Supported. **Spaces do not need escaping, and do not wrap the whole path in double quotes**. `local.properties` is a Java Properties file: the entire line after the `=` is the property value; only backslashes need to be doubled.
+
+On Windows, follow the example in `examples/local.properties`:
+
+```properties
+java.home=C\:\\Program Files\\Android\\Android Studio\\jbr
+```
+
+On macOS / Linux, use a normal Unix path, for example:
+
+```properties
+java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+```
+
+### What if the configured `java.home` does not exist?
+
+It will not fail immediately. If `local.properties` is missing or the configured path is invalid, the script falls back in this order:
+
+1. `java.home` in `.gradle/config.properties`
+2. The `JAVA_HOME` environment variable
+3. `java` found in the system `PATH`
+
+### `local.properties` is ignored by `.gitignore`; what happens when someone clones the repo?
+
+This is by design. Local configuration should not be tracked in Git. After cloning, each developer adds their own `java.home` to `local.properties`.
+
+### The patch stops working after upgrading the Gradle Wrapper?
+
+`./gradlew wrapper` regenerates `gradlew` / `gradlew.bat`, so you need to re-apply the patch. This is an inherent limitation of wrapper-level patches.
+
+### Does this conflict with `org.gradle.java.home` in `gradle.properties`?
+
+No. This patch overrides `JAVA_HOME` during the wrapper startup phase, which takes priority over the `org.gradle.java.home` property read by Gradle internally.
+
+---
+
 ## Repository Structure
 
 ```

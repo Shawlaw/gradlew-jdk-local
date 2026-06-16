@@ -92,14 +92,14 @@ if not defined _LOCAL_JAVA_HOME (
 )
 
 :applyLocalJavaHome
-if defined _LOCAL_JAVA_HOME (
-    set "JAVA_HOME=%_LOCAL_JAVA_HOME:\:=:%"
-    set "JAVA_HOME=%JAVA_HOME:\\=\%"
-    set "_LOCAL_JAVA_HOME="
-    goto :findJavaFromJavaHome
-)
+if not defined _LOCAL_JAVA_HOME goto :continueOriginalJavaLookup
+set "JAVA_HOME=%_LOCAL_JAVA_HOME:\:=:%"
+set "JAVA_HOME=%JAVA_HOME:\\=\%"
+set "_LOCAL_JAVA_HOME="
+goto :findJavaFromJavaHome
 
 @rem 3. If not found, continue to original JAVA_HOME / PATH logic
+:continueOriginalJavaLookup
 ```
 
 ### 配置方式

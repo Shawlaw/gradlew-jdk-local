@@ -28,11 +28,12 @@ After patching, please self-check and include the following verification notes i
      - **Before patch**: Run `./gradlew --version` (on Windows run `gradlew.bat --version`) and note the JDK path shown in the `JVM:` line (usually the system `JAVA_HOME`).
      - **After patch**: Add `java.home` to `local.properties` (see the configuration example above) and run `./gradlew --version` again.
      - **Compare**: Confirm that the `JVM:` line now shows the JDK path configured in `local.properties`.
-4. **Priority note**: Briefly explain the patched JDK lookup priority at the end of your response: `java.home` in `local.properties` > `java.home` in `.gradle/config.properties` > environment variable `JAVA_HOME` > `java` in system `PATH`.
+4. **Priority note**: Briefly explain the patched Wrapper / Client JVM JDK lookup priority at the end of your response: `java.home` in `local.properties` > `java.home` in `.gradle/config.properties` > environment variable `JAVA_HOME` > `java` in system `PATH`.
 5. **Fallback behavior note**: Briefly explain that:
    - If `local.properties` is missing or has no `java.home`, the script falls back to `.gradle/config.properties`.
    - If neither is configured, it fully falls back to the native `JAVA_HOME` / `PATH` logic.
    - If `java.home` is read, it directly overrides `JAVA_HOME`; path validity is checked by the Gradle Wrapper's native logic.
+6. **Daemon JVM note**: Briefly explain that the Gradle Daemon / build JVM still follows Gradle's official mechanisms; if neither `org.gradle.java.home` nor Daemon JVM criteria is configured, the Daemon / build JVM also defaults to the JDK read by this patch; if those official options are configured, the actual build JDK may differ from the Wrapper / Client JVM.
 
 ### Reference Implementation
 

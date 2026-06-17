@@ -72,7 +72,7 @@ This project provides a minimal Gradle Wrapper patch that makes `gradlew` / `gra
 
 ### Priority & Compatibility
 
-When multiple JDK paths are configured, this patch looks them up in the following priority:
+When multiple JDK paths are configured, this patch uses the following lookup priority for the **Gradle Wrapper / Client JVM** `JAVA_HOME`:
 
 1. **`java.home` in `local.properties`** (highest priority)
 2. **`java.home` in `.gradle/config.properties`** (Android Studio's `GRADLE_LOCAL_JAVA_HOME` config)
@@ -80,6 +80,8 @@ When multiple JDK paths are configured, this patch looks them up in the followin
 4. **`java` in system `PATH`** (final fallback)
 
 This respects the Android developer's habit of keeping all local paths in one place, while remaining compatible with existing Android Studio projects that use `.gradle/config.properties`. If neither is configured, it fully falls back to the Gradle Wrapper's native `JAVA_HOME` → `PATH` logic, **without breaking any existing behavior**.
+
+Note: the Gradle Daemon / build JVM still follows [Gradle's official mechanisms](https://docs.gradle.org/current/userguide/gradle_daemon.html#sec:daemon_jvm_criteria). If neither `org.gradle.java.home` nor Daemon JVM criteria is configured, the Daemon defaults to the same JVM read by this patch; if those official Gradle options are configured, the Daemon / build JVM may differ from the Wrapper / Client JVM.
 
 ---
 
@@ -121,7 +123,7 @@ This is by design. Local configuration should not be tracked in Git. After cloni
 
 ### Does this conflict with `org.gradle.java.home` in `gradle.properties`?
 
-No. This patch overrides `JAVA_HOME` during the wrapper startup phase, which takes priority over the `org.gradle.java.home` property read by Gradle internally.
+No, but they apply at different layers. This patch sets `JAVA_HOME` during the Wrapper startup phase; when neither `org.gradle.java.home` nor Daemon JVM criteria is configured, the Daemon / build JVM defaults to this JDK as well. `org.gradle.java.home` is [Gradle's official configuration for selecting the Daemon / build JVM](https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties), so it may override the JDK used for actual builds.
 
 ---
 

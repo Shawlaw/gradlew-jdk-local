@@ -72,7 +72,7 @@ Android 项目的本地工具链配置是碎片化的：
 
 ### 优先级与兼容性
 
-当多处都配置了 JDK 路径时，本 Patch 的查找优先级如下：
+当多处都配置了 JDK 路径时，本 Patch 对 **Gradle Wrapper / Client JVM** 的 `JAVA_HOME` 查找优先级如下：
 
 1. **`local.properties` 中的 `java.home`**（最高优先级）
 2. **`.gradle/config.properties` 中的 `java.home`**（Android Studio 的 `GRADLE_LOCAL_JAVA_HOME` 配置）
@@ -80,6 +80,8 @@ Android 项目的本地工具链配置是碎片化的：
 4. **系统 `PATH` 中的 `java`**（最终 fallback）
 
 这样既尊重了 Android 开发者统一配置本地路径的习惯，又兼容了已有 Android Studio 项目的 `.gradle/config.properties` 设置。如果两者都未配置，则完全回退到 Gradle Wrapper 原生的 `JAVA_HOME` → `PATH` 逻辑，**不会破坏任何现有行为**。
+
+需要注意：Gradle Daemon / build JVM 仍遵循 [Gradle 官方机制](https://docs.gradle.org/current/userguide/gradle_daemon.html#sec:daemon_jvm_criteria)。如果没有配置 `org.gradle.java.home` 或 Daemon JVM criteria，Daemon 默认会使用本 patch 读到的同一个 JVM；如果配置了这些 Gradle 官方选项，则 Daemon / build JVM 可能与 Wrapper / Client JVM 不同。
 
 ---
 
@@ -121,7 +123,7 @@ java.home=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
 
 ### 和 `gradle.properties` 里的 `org.gradle.java.home` 冲突吗？
 
-不冲突。本 patch 在 wrapper 启动阶段就覆盖了 `JAVA_HOME`，优先级高于 Gradle 内部读取的 `org.gradle.java.home`。
+不冲突，但作用层级不同。本 patch 在 Wrapper 启动阶段设置 `JAVA_HOME`；没有 `org.gradle.java.home` 或 Daemon JVM criteria 时，Daemon / build JVM 默认也会使用这个 JDK。`org.gradle.java.home` 是 [Gradle 官方用于指定 Daemon / build JVM 的配置](https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties)，配置后可能覆盖实际编译时使用的 JDK。
 
 ---
 
